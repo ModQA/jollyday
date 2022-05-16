@@ -1,35 +1,34 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jaxb.mapping.Configuration;
-import de.focus_shift.jaxb.mapping.Month;
-import de.focus_shift.jaxb.mapping.ObjectFactory;
-import de.focus_shift.jaxb.mapping.Weekday;
+import de.focus_shift.jackson.mapping.Configuration;
+import de.focus_shift.jackson.mapping.Month;
+import de.focus_shift.jackson.mapping.ObjectFactory;
+import de.focus_shift.jackson.mapping.Weekday;
 import de.focus_shift.util.ClassLoadingUtil;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.jacksonContext;
+import jakarta.xml.bind.jacksonElement;
+import jakarta.xml.bind.jacksonException;
 import jakarta.xml.bind.Unmarshaller;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.time.DayOfWeek;
+import java.util.logging.Logger;
 
 public class XMLUtil {
 
   /**
    * the package name to search for the generated java classes.
    */
-  public static final String PACKAGE = "de.focus_shift.jaxb.mapping";
+  public static final String PACKAGE = "de.focus_shift.jackson.mapping";
 
-  private static final Logger LOG = LoggerFactory.getLogger(de.focus_shift.jackson.XMLUtil.class);
+  private static final Logger LOG = Logger.getLogger(XMLUtil.class.getName());
 
-  private JAXBContextCreator contextCreator = new JAXBContextCreator();
+  private final jacksonContextCreator contextCreator = new jacksonContextCreator();
   private final ClassLoadingUtil classLoadingUtil = new ClassLoadingUtil();
 
   /**
-   * Unmarshalls the configuration from the stream. Uses <code>JAXB</code> for
+   * Unmarshalls the configuration from the stream. Uses <code>jackson</code> for
    * this.
    *
    * @param stream a {@link java.io.InputStream} object.
@@ -40,20 +39,20 @@ public class XMLUtil {
       throw new IllegalArgumentException("Stream is NULL. Cannot read XML.");
     }
     try {
-      JAXBContext ctx;
+      jacksonContext ctx;
       try {
-        ctx = contextCreator.create(de.focus_shift.jackson.XMLUtil.PACKAGE, classLoadingUtil.getClassloader());
-      } catch (JAXBException e) {
-        LOG.warn("Could not create JAXB context using the current threads context classloader. Falling back to ObjectFactory class classloader.");
+        ctx = contextCreator.create(XMLUtil.PACKAGE, classLoadingUtil.getClassloader());
+      } catch (jacksonException e) {
+        LOG.warning("Could not create jackson context using the current threads context classloader. Falling back to ObjectFactory class classloader.");
         ctx = null;
       }
       if (ctx == null) {
-        ctx = contextCreator.create(de.focus_shift.jackson.XMLUtil.PACKAGE, ObjectFactory.class.getClassLoader());
+        ctx = contextCreator.create(XMLUtil.PACKAGE, ObjectFactory.class.getClassLoader());
       }
       final Unmarshaller um = ctx.createUnmarshaller();
-      @SuppressWarnings("unchecked") final JAXBElement<Configuration> el = (JAXBElement<Configuration>) um.unmarshal(stream);
+      @SuppressWarnings("unchecked") final jacksonElement<Configuration> el = (jacksonElement<Configuration>) um.unmarshal(stream);
       return el.getValue();
-    } catch (JAXBException ue) {
+    } catch (jacksonException ue) {
       throw new IllegalStateException("Cannot parse holidays XML file.", ue);
     }
   }
@@ -84,7 +83,7 @@ public class XMLUtil {
    * @param type the type of holiday in the config
    * @return the type of holiday
    */
-  public HolidayType getType(de.focus_shift.jaxb.mapping.HolidayType type) {
+  public HolidayType getType(de.focus_shift.jackson.mapping.HolidayType type) {
     switch (type) {
       case OFFICIAL_HOLIDAY:
         return HolidayType.OFFICIAL_HOLIDAY;
@@ -95,9 +94,9 @@ public class XMLUtil {
     }
   }
 
-  public static class JAXBContextCreator {
-    public JAXBContext create(String packageName, ClassLoader classLoader) throws JAXBException {
-      return JAXBContext.newInstance(packageName, classLoader);
+  public static class jacksonContextCreator {
+    public jacksonContext create(String packageName, ClassLoader classLoader) throws jacksonException {
+      return jacksonContext.newInstance(packageName, classLoader);
     }
   }
 }

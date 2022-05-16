@@ -1,7 +1,6 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jackson.JaxbFixed;
 import de.focus_shift.spi.Fixed;
 import de.focus_shift.spi.FixedWeekdayBetweenFixed;
 import de.focus_shift.spi.YearCycle;
@@ -9,23 +8,27 @@ import de.focus_shift.spi.YearCycle;
 import java.time.DayOfWeek;
 import java.time.Year;
 
+/**
+ * @author sdiedrichsen
+ * @version $
+ * @since 15.03.20
+ */
+public class jacksonFixedWeekdayBetweenFixed implements FixedWeekdayBetweenFixed {
 
-public class JaxbFixedWeekdayBetweenFixed implements FixedWeekdayBetweenFixed {
+  private final de.focus_shift.jackson.mapping.FixedWeekdayBetweenFixed fixedWeekdayBetweenFixed;
 
-  private final de.focus_shift.jaxb.mapping.FixedWeekdayBetweenFixed fixedWeekdayBetweenFixed;
-
-  public JaxbFixedWeekdayBetweenFixed(de.focus_shift.jaxb.mapping.FixedWeekdayBetweenFixed fixedWeekdayInMonth) {
+  public jacksonFixedWeekdayBetweenFixed(de.focus_shift.jackson.mapping.FixedWeekdayBetweenFixed fixedWeekdayInMonth) {
     this.fixedWeekdayBetweenFixed = fixedWeekdayInMonth;
   }
 
   @Override
   public Fixed from() {
-    return new de.focus_shift.jackson.JaxbFixed(fixedWeekdayBetweenFixed.getFrom());
+    return new de.focus_shift.jackson.jacksonFixed(fixedWeekdayBetweenFixed.getFrom());
   }
 
   @Override
   public Fixed to() {
-    return new JaxbFixed(fixedWeekdayBetweenFixed.getTo());
+    return new jacksonFixed(fixedWeekdayBetweenFixed.getTo());
   }
 
   @Override
@@ -63,6 +66,6 @@ public class JaxbFixedWeekdayBetweenFixed implements FixedWeekdayBetweenFixed {
   public YearCycle cycle() {
     return fixedWeekdayBetweenFixed.getEvery() == null
       ? YearCycle.EVERY_YEAR
-      : YearCycle.valueOf(fixedWeekdayBetweenFixed.getEvery().name());
+      : YearCycle.valueOf(fixedWeekdayBetweenFixed.getEvery());
   }
 }

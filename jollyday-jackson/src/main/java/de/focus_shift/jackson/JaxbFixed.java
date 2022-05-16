@@ -1,8 +1,6 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jackson.JaxbMovingCondition;
-import de.focus_shift.jackson.XMLUtil;
 import de.focus_shift.spi.Fixed;
 import de.focus_shift.spi.MovingCondition;
 import de.focus_shift.spi.YearCycle;
@@ -13,14 +11,18 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-
-public class JaxbFixed implements Fixed {
+/**
+ * @author sdiedrichsen
+ * @version $
+ * @since 15.03.20
+ */
+public class jacksonFixed implements Fixed {
 
   private final de.focus_shift.jackson.XMLUtil xmlUtil = new XMLUtil();
 
-  private final de.focus_shift.jaxb.mapping.Fixed fixed;
+  private final de.focus_shift.jackson.mapping.Fixed fixed;
 
-  public JaxbFixed(de.focus_shift.jaxb.mapping.Fixed fixed) {
+  public jacksonFixed(de.focus_shift.jackson.mapping.Fixed fixed) {
     this.fixed = fixed;
   }
 
@@ -59,13 +61,13 @@ public class JaxbFixed implements Fixed {
   public YearCycle cycle() {
     return fixed.getEvery() == null
       ? YearCycle.EVERY_YEAR
-      : YearCycle.valueOf(fixed.getEvery().name());
+      : YearCycle.valueOf(fixed.getEvery());
   }
 
   @Override
   public List<MovingCondition> conditions() {
     return fixed.getMovingCondition().stream()
-      .map(JaxbMovingCondition::new)
+      .map(jacksonMovingCondition::new)
       .collect(toList());
   }
 }

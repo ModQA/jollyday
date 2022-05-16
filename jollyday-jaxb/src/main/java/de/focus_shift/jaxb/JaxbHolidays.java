@@ -1,5 +1,16 @@
 package de.focus_shift.jaxb;
 
+import de.focus_shift.jackson.JaxbChristianHoliday;
+import de.focus_shift.jackson.JaxbEthiopianOrthodoxHoliday;
+import de.focus_shift.jackson.JaxbFixed;
+import de.focus_shift.jackson.JaxbFixedWeekdayBetweenFixed;
+import de.focus_shift.jackson.JaxbFixedWeekdayInMonth;
+import de.focus_shift.jackson.JaxbFixedWeekdayRelativeToFixed;
+import de.focus_shift.jackson.JaxbHinduHoliday;
+import de.focus_shift.jackson.JaxbIslamicHoliday;
+import de.focus_shift.jackson.JaxbRelativeToEasterSunday;
+import de.focus_shift.jackson.JaxbRelativeToFixed;
+import de.focus_shift.jackson.JaxbRelativeToWeekdayInMonth;
 import de.focus_shift.spi.ChristianHoliday;
 import de.focus_shift.spi.EthiopianOrthodoxHoliday;
 import de.focus_shift.spi.Fixed;

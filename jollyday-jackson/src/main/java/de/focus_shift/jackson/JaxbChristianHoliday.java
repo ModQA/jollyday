@@ -1,7 +1,6 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jackson.JaxbMovingCondition;
 import de.focus_shift.spi.ChristianHoliday;
 import de.focus_shift.spi.ChristianHolidayType;
 import de.focus_shift.spi.MovingCondition;
@@ -13,15 +12,19 @@ import java.time.chrono.Chronology;
 import java.time.chrono.IsoChronology;
 import java.util.List;
 
-import static de.focus_shift.jaxb.mapping.ChronologyType.JULIAN;
+import static de.focus_shift.jackson.mapping.ChronologyType.JULIAN;
 import static java.util.stream.Collectors.toList;
 
+/**
+ * @author sdiedrichsen
+ * @version $
+ * @since 15.03.20
+ */
+public class jacksonChristianHoliday implements ChristianHoliday {
 
-public class JaxbChristianHoliday implements ChristianHoliday {
+  private final de.focus_shift.jackson.mapping.ChristianHoliday christianHoliday;
 
-  private final de.focus_shift.jaxb.mapping.ChristianHoliday christianHoliday;
-
-  public JaxbChristianHoliday(de.focus_shift.jaxb.mapping.ChristianHoliday christianHoliday) {
+  public jacksonChristianHoliday(de.focus_shift.jackson.mapping.ChristianHoliday christianHoliday) {
     this.christianHoliday = christianHoliday;
   }
 
@@ -67,13 +70,13 @@ public class JaxbChristianHoliday implements ChristianHoliday {
   public YearCycle cycle() {
     return christianHoliday.getEvery() == null
       ? YearCycle.EVERY_YEAR
-      : YearCycle.valueOf(christianHoliday.getEvery().name());
+      : YearCycle.valueOf(christianHoliday.getEvery());
   }
 
   @Override
   public List<MovingCondition> conditions() {
     return christianHoliday.getMovingCondition().stream()
-      .map(JaxbMovingCondition::new)
+      .map(jacksonMovingCondition::new)
       .collect(toList());
   }
 }

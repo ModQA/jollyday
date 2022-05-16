@@ -1,7 +1,6 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jackson.JaxbFixed;
 import de.focus_shift.spi.Fixed;
 import de.focus_shift.spi.FixedWeekdayRelativeToFixed;
 import de.focus_shift.spi.Occurrance;
@@ -11,12 +10,16 @@ import de.focus_shift.spi.YearCycle;
 import java.time.DayOfWeek;
 import java.time.Year;
 
+/**
+ * @author sdiedrichsen
+ * @version $
+ * @since 15.03.20
+ */
+public class jacksonFixedWeekdayRelativeToFixed implements FixedWeekdayRelativeToFixed {
 
-public class JaxbFixedWeekdayRelativeToFixed implements FixedWeekdayRelativeToFixed {
+  private final de.focus_shift.jackson.mapping.FixedWeekdayRelativeToFixed fixedWeekdayRelativeToFixed;
 
-  private final de.focus_shift.jaxb.mapping.FixedWeekdayRelativeToFixed fixedWeekdayRelativeToFixed;
-
-  public JaxbFixedWeekdayRelativeToFixed(de.focus_shift.jaxb.mapping.FixedWeekdayRelativeToFixed fixedWeekdayRelativeToFixed) {
+  public jacksonFixedWeekdayRelativeToFixed(de.focus_shift.jackson.mapping.FixedWeekdayRelativeToFixed fixedWeekdayRelativeToFixed) {
     this.fixedWeekdayRelativeToFixed = fixedWeekdayRelativeToFixed;
   }
 
@@ -32,7 +35,7 @@ public class JaxbFixedWeekdayRelativeToFixed implements FixedWeekdayRelativeToFi
 
   @Override
   public Fixed day() {
-    return new JaxbFixed(fixedWeekdayRelativeToFixed.getDay());
+    return new jacksonFixed(fixedWeekdayRelativeToFixed.getDay());
   }
 
   @Override
@@ -70,6 +73,6 @@ public class JaxbFixedWeekdayRelativeToFixed implements FixedWeekdayRelativeToFi
   public YearCycle cycle() {
     return fixedWeekdayRelativeToFixed.getEvery() == null
       ? YearCycle.EVERY_YEAR
-      : YearCycle.valueOf(fixedWeekdayRelativeToFixed.getEvery().name());
+      : YearCycle.valueOf(fixedWeekdayRelativeToFixed.getEvery());
   }
 }

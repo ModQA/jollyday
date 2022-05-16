@@ -1,7 +1,6 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jackson.JaxbFixed;
 import de.focus_shift.spi.Fixed;
 import de.focus_shift.spi.Relation;
 import de.focus_shift.spi.RelativeToFixed;
@@ -11,17 +10,22 @@ import org.threeten.extra.Days;
 import java.time.DayOfWeek;
 import java.time.Year;
 
-public class JaxbRelativeToFixed implements RelativeToFixed {
+/**
+ * @author sdiedrichsen
+ * @version $
+ * @since 15.03.20
+ */
+public class jacksonRelativeToFixed implements RelativeToFixed {
 
-  private final de.focus_shift.jaxb.mapping.RelativeToFixed relativeToFixed;
+  private final de.focus_shift.jackson.mapping.RelativeToFixed relativeToFixed;
 
-  public JaxbRelativeToFixed(de.focus_shift.jaxb.mapping.RelativeToFixed relativeToFixed) {
+  public jacksonRelativeToFixed(de.focus_shift.jackson.mapping.RelativeToFixed relativeToFixed) {
     this.relativeToFixed = relativeToFixed;
   }
 
   @Override
   public Fixed date() {
-    return new JaxbFixed(relativeToFixed.getDate());
+    return new jacksonFixed(relativeToFixed.getDate());
   }
 
   @Override
@@ -75,6 +79,6 @@ public class JaxbRelativeToFixed implements RelativeToFixed {
   public YearCycle cycle() {
     return relativeToFixed.getEvery() == null
       ? YearCycle.EVERY_YEAR
-      : YearCycle.valueOf(relativeToFixed.getEvery().name());
+      : YearCycle.valueOf(relativeToFixed.getEvery());
   }
 }

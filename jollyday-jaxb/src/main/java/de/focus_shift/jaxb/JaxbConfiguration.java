@@ -1,5 +1,6 @@
 package de.focus_shift.jaxb;
 
+import de.focus_shift.jackson.JaxbHolidays;
 import de.focus_shift.spi.Configuration;
 import de.focus_shift.spi.Holidays;
 
@@ -21,7 +22,7 @@ public class JaxbConfiguration implements Configuration {
 
   @Override
   public Stream<Configuration> subConfigurations() {
-    return xmlConfiguration.getSubConfigurations().stream().map(JaxbConfiguration::new);
+    return xmlConfiguration.getSubConfigurations().stream().map(de.focus_shift.jackson.JaxbConfiguration::new);
   }
 
   @Override

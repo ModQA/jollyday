@@ -1,7 +1,6 @@
-package de.focus_shift.jaxb;
+package de.focus_shift.jackson;
 
 import de.focus_shift.HolidayType;
-import de.focus_shift.jackson.JaxbFixedWeekdayInMonth;
 import de.focus_shift.spi.FixedWeekdayInMonth;
 import de.focus_shift.spi.Relation;
 import de.focus_shift.spi.RelativeToWeekdayInMonth;
@@ -10,18 +9,22 @@ import de.focus_shift.spi.YearCycle;
 import java.time.DayOfWeek;
 import java.time.Year;
 
+/**
+ * @author sdiedrichsen
+ * @version $
+ * @since 15.03.20
+ */
+public class jacksonRelativeToWeekdayInMonth implements RelativeToWeekdayInMonth {
 
-public class JaxbRelativeToWeekdayInMonth implements RelativeToWeekdayInMonth {
+  private final de.focus_shift.jackson.mapping.RelativeToWeekdayInMonth relativeToWeekdayInMonth;
 
-  private final de.focus_shift.jaxb.mapping.RelativeToWeekdayInMonth relativeToWeekdayInMonth;
-
-  public JaxbRelativeToWeekdayInMonth(de.focus_shift.jaxb.mapping.RelativeToWeekdayInMonth relativeToWeekdayInMonth) {
+  public jacksonRelativeToWeekdayInMonth(de.focus_shift.jackson.mapping.RelativeToWeekdayInMonth relativeToWeekdayInMonth) {
     this.relativeToWeekdayInMonth = relativeToWeekdayInMonth;
   }
 
   @Override
   public FixedWeekdayInMonth weekdayInMonth() {
-    return new JaxbFixedWeekdayInMonth(relativeToWeekdayInMonth.getFixedWeekday());
+    return new jacksonFixedWeekdayInMonth(relativeToWeekdayInMonth.getFixedWeekday());
   }
 
   @Override
@@ -64,6 +67,6 @@ public class JaxbRelativeToWeekdayInMonth implements RelativeToWeekdayInMonth {
   public YearCycle cycle() {
     return relativeToWeekdayInMonth.getEvery() == null
       ? YearCycle.EVERY_YEAR
-      : YearCycle.valueOf(relativeToWeekdayInMonth.getEvery().name());
+      : YearCycle.valueOf(relativeToWeekdayInMonth.getEvery());
   }
 }
