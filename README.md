@@ -7,7 +7,7 @@ Thanks to @svendiedrichsen who started jollyday!
 ## How to use it
 
 **Jollyday** is based on **Java 11** and can be used directly as dependency via maven or gradle e.g.
-The calculation basis of the public holidays for each country is based on a xml file and will be mapped via Jakarta XML Binding.
+The calculation basis of the public holidays for each country is based on a xml file and will be mapped via Jakarta XML Binding or Jackson Data-Binding.
 If you already use one of these libraries in your project than just use the specific jollyday dependency.
 
 <details>
@@ -22,6 +22,16 @@ If you already use one of these libraries in your project than just use the spec
     <version>${version}</version>
   </dependency>
   ```
+
+  #### Jackson Data-Binding
+  
+  ```xml
+  <dependency>
+    <groupId>de.focus-shift</groupId>
+    <artifactId>jollyday-jackson</artifactId>
+    <version>${version}</version>
+  </dependency>
+  ```
 </details>
 
 <details>
@@ -31,6 +41,12 @@ If you already use one of these libraries in your project than just use the spec
   
   ```gradle
   implementation group: 'de.focus-shift', name: 'jollyday-jaxb', version: '${version}'
+  ```
+
+  #### Jackson Data-Binding
+  
+  ```gradle
+  implementation group: 'de.focus-shift', name: 'jollyday-jackson', version: '${version}'
   ```
 </details>
 
