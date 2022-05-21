@@ -26,12 +26,6 @@
       <version>2.13.3</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <version>3.0.1</version>
-      <scope>compile</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -56,36 +50,22 @@
       </plugin>
 
       <plugin>
-        <groupId>com.github.davidmoten</groupId>
-        <artifactId>jax-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>xjc</goal>
-            </goals>
-            <configuration>
-              <systemProperties>
-                <enableExternalEntityProcessing>true</enableExternalEntityProcessing>
-              </systemProperties>
-              <jvmArguments>
-                <jvmArgument>-Xms32m</jvmArgument>
-              </jvmArguments>
-              <arguments>
-                <!-- These are the arguments you would normally have put with a call to xjc -->
-                <argument>-verbose</argument>
-                <argument>-d</argument>
-                <argument>${project.build.directory}/generated-sources/jackson</argument>
-                <argument>-target</argument>
-                <argument>3.0</argument>
-                <argument>-p</argument>
-                <argument>de.focus_shift.jackson.mapping</argument>
-                <argument>${project.build.directory}/dependency/Holiday.xsd</argument>
-              </arguments>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.15.1</version>
+        <configuration>
+          <plugins>
+            <plugin>
+              <groupId>io.fares.bind.xjc.plugins</groupId>
+              <artifactId>jackson-xjc-plugin</artifactId>
+              <version>0.0.2</version>
+            </plugin>
+          </plugins>
+          <extension>true</extension>
+          <args>
+            <arg>-Xjackson</arg>
+          </args>
+        </configuration>
       </plugin>
     </plugins>
   </build>

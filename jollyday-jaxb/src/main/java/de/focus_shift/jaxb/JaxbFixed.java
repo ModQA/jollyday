@@ -2,7 +2,6 @@ package de.focus_shift.jaxb;
 
 import de.focus_shift.HolidayType;
 import de.focus_shift.jackson.JaxbMovingCondition;
-import de.focus_shift.jackson.XMLUtil;
 import de.focus_shift.spi.Fixed;
 import de.focus_shift.spi.MovingCondition;
 import de.focus_shift.spi.YearCycle;

@@ -4,7 +4,6 @@ import de.focus_shift.ManagerParameter;
 import de.focus_shift.spi.Configuration;
 import de.focus_shift.spi.ConfigurationService;
 import de.focus_shift.jackson.JaxbConfiguration;
-import de.focus_shift.jackson.XMLUtil;
 
 import java.io.InputStream;
 import java.net.URL;
